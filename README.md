@@ -1,75 +1,158 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# AstroVitals
 
-Currently, two official plugins are available:
+### AI-Assisted Astronaut Health Monitoring
+**NASA Space Apps Challenge 2026**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+AstroVitals is a research prototype designed to explore how astronaut health information could be monitored and visualised during long-duration space missions.
 
-## React Compiler
+Astronauts depend on reliable spacecraft systems to maintain safe living conditions. However, physiological health monitoring is equally important, particularly when crews operate far from Earth and immediate medical assistance may be limited.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+AstroVitals brings physiological telemetry, machine-learning analysis and interactive 3D anatomy together in one interface to help users explore astronaut health information.
 
-## Expanding the ESLint configuration
+## Project Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Crew Management
+- View fictional crew members and their roles.
+- Select individual astronauts to explore their health profiles.
+- Explore different simulated spacecraft and mission scenarios.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Health Dashboard
+- Display heart rate, sleep duration, blood pressure and heart rate variability.
+- Visualise historical heart-rate trends over 24-hour, 7-day and 30-day periods.
+- Display available measurements without inventing missing sensor data.
+- Export health information as CSV.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Machine-Learning Analysis
+AstroVitals incorporates a trained PyTorch autoencoder to analyse physiological telemetry.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+An autoencoder is a neural network that learns to reconstruct its input data. Differences between the original input and its reconstruction can provide an indication of unusual data patterns.
 
+The existing trained model processes five physiological features and calculates a reconstruction-error score through the Python backend.
+
+The model and its underlying encoder architecture were developed by the team. AI assistance was used for aspects of application integration, coding and debugging.
+
+The current anomaly score is not medically calibrated and does not establish whether an astronaut is healthy or unwell.
+
+### Interactive 3D Health Map
+- Explore a detailed anatomical model.
+- Examine cardiovascular, respiratory, circulatory and cognitive-related systems.
+- View physiological measurements alongside relevant anatomy.
+- Rotate and inspect the model using interactive 3D controls.
+
+## Technology Stack
+
+**Frontend**
+- React
+- TypeScript
+- Vite
+- Three.js
+- React Three Fiber
+- Recharts
+- Lucide
+
+**Backend and Machine Learning**
+- Python
+- FastAPI
+- PyTorch
+- scikit-learn
+- Pandas
+- NumPy
+
+**3D Anatomy**
+- Open Anatomy 3D and its credited anatomical source datasets.
+
+## How It Works
+
+1. The user selects a crew member from the dashboard.
+2. The React frontend requests physiological telemetry from the FastAPI backend.
+3. The backend retrieves historical synthetic telemetry records.
+4. A trained PyTorch autoencoder processes the available physiological features.
+5. The backend returns telemetry, historical trends and a reconstruction-error score.
+6. The frontend displays the results through health cards, graphs and interactive anatomy.
+
+The current spacecraft selections represent simulated mission scenarios rather than separate spacecraft datasets.
+
+## Running AstroVitals Locally
+
+### Frontend
+
+From the project directory:
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+### Backend
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+From the `Backend` directory, create and activate a Python virtual environment, install the requirements and start the API:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python -m uvicorn main:app --reload --port 8000
 ```
+
+The frontend and backend must both be running for Python API functionality.
+
+## Data and Limitations
+
+AstroVitals currently uses historical synthetic astronaut telemetry rather than live physiological sensor measurements.
+
+Crew members are fictional, and the project is not connected to operational spacecraft systems.
+
+The trained autoencoder performs genuine model inference, but its reconstruction-error score has not been validated against a clinical anomaly threshold.
+
+The project is an educational research prototype and is not a medical device or diagnostic system.
+
+## Use of Artificial Intelligence
+
+AstroVitals was developed under the time constraints of the NASA Space Apps Challenge 2026.
+
+Generative AI tools, including ChatGPT, were used to accelerate parts of the development process, including:
+
+- Brainstorming and refining project ideas.
+- Assisting with frontend implementation and interface development.
+- Supporting code integration and debugging.
+- Explaining technical concepts and troubleshooting errors.
+- Assisting with documentation and presentation preparation.
+
+The trained autoencoder and its underlying encoder architecture were developed by the team rather than generated by a chatbot.
+
+AI assistance supported the development process but does not replace the team's responsibility for the project, its implementation and its limitations.
+
+## Future Development
+
+Potential future improvements include integrating real physiological sensors, validating anomaly-detection thresholds, establishing personalised longitudinal baselines and evaluating the system in realistic mission scenarios.
+
+## NASA Resources
+
+- [5 Hazards of Human Spaceflight](https://www.nasa.gov/hrp/hazards/)
+- [Risks of Human Spaceflight](https://www.nasa.gov/hrp/risks/)
+- [Ongoing Human Research Program Research](https://www.nasa.gov/hrp/ongoing-hrp-research/)
+
+## External Resources and Attribution
+
+- [Open Anatomy 3D](https://github.com/insightsoftwareconsortium/open-anatomy-3d)
+- [BodyParts3D](https://lifesciencedb.jp/bp3d/)
+- [Human Reference Atlas](https://humanatlas.io/)
+- [MakeHuman](https://www.makehumancommunity.org/)
+- [React](https://react.dev/)
+- [Three.js](https://threejs.org/)
+- [React Three Fiber](https://r3f.docs.pmnd.rs/)
+- [Recharts](https://recharts.org/)
+- [PyTorch](https://pytorch.org/)
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [scikit-learn](https://scikit-learn.org/)
+- [Vite](https://vite.dev/)
+- [Lucide](https://lucide.dev/)
+
+Anatomical model components retain their respective source licences and attribution requirements.
+
+---
+
+**AstroVitals — NASA Space Apps Challenge 2026**
+
+*Research prototype. Synthetic data. Not intended for medical diagnosis.*
